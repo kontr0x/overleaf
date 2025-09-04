@@ -19,6 +19,12 @@
   Figure 1: A screenshot of a project being edited in Overleaf Community Edition.
 </p>
 
+## Purpose of this repository
+
+This repository contains the source code for Overleaf Community Edition with the following additional features:
+
+- Autocompletion of references keys
+
 ## Community Edition
 
 [Overleaf](https://www.overleaf.com) is an open-source online real-time collaborative LaTeX editor. We run a hosted version at [www.overleaf.com](https://www.overleaf.com), but you can also run your own local version, and contribute to the development of Overleaf.
@@ -64,7 +70,6 @@ We use the [Phusion base-image](https://github.com/phusion/baseimage-docker)
 in which to run the Overleaf services. Baseimage uses the `runit` service
 manager to manage services, and we add our init-scripts from the `server-ce/runit`
 folder.
-
 
 ## Contributing
 
