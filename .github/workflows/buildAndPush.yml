@@ -1,0 +1,43 @@
+name: Docker build and push
+
+on:
+    workflow_dispatch:
+        inputs:
+            version-spec:
+                default: cext
+
+jobs:
+    build-docker-images:
+        runs-on: ubuntu-latest
+        steps:
+          - name: Checkout code
+            uses: action/checkout@v5
+
+          - name: Build base image
+            run: make build-base
+            working-directory: ./server-ce
+
+          - name: Tag base image
+            run: |
+                docker tag sharelatex/sharelatex-base:${{ github.ref_name }} \
+                ghcr.io/${{ github.repository }}/sharelatex/sharelatex-base:${{ github.ref_name }}
+
+          - name: Build community image
+            run: make build-community
+            working-directory: ./server-ce
+        
+          - name: Tag community image
+            run: |
+                docker tag sharelatex/sharelatex:${{ github.ref_name }} \
+                ghcr.io/${{ github.repository }}/sharelatex/sharelatex-${{ inputs.version-spec }}:${{ github.ref_name }}
+
+          - name: Login to GitHub Container Registry
+            uses: docker/login-action@v3.5
+            with:
+                registry: ghcr.io
+                username: ${{ github.repository_owner }}
+                password: ${{ secrets.GITHUB_TOKEN }}
+        
+          - name: Push images
+            run: |
+                docker push ghcr.io/${{ github.repository }}/sharelatex/sharelatex-${{ inputs.version-spec }}:${{ github.ref_name }}
