@@ -123,6 +123,13 @@ services:
     env_file:
       - dev.env
 
+  references:
+    build:
+      context: ..
+      dockerfile: services/references/Dockerfile
+    env_file:
+      - dev.env
+
   redis:
     image: redis:5
     ports:
@@ -160,6 +167,7 @@ services:
       - notifications
       - project-history
       - real-time
+      - references
 
   webpack:
     build:
