@@ -11,7 +11,7 @@ jobs:
         runs-on: ubuntu-latest
         steps:
           - name: Checkout code
-            uses: action/checkout@v5
+            uses: actions/checkout@v5
 
           - name: Build base image
             run: make build-base
@@ -32,7 +32,7 @@ jobs:
                 ghcr.io/${{ github.repository }}/sharelatex/sharelatex-${{ inputs.version-spec }}:${{ github.ref_name }}
 
           - name: Login to GitHub Container Registry
-            uses: docker/login-action@v3.5
+            uses: docker/login-action@v3
             with:
                 registry: ghcr.io
                 username: ${{ github.repository_owner }}
